@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    volumes:
+      - ./media:/media
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      # Django settings overrides:
+      - ALLOWED_HOSTS=*
+      - DEBUG=True
+      - DATABASE_URL=postgres://fullcircle:fullcircle@db:5432/fullcircle_database
+    command: >
+      bash -c "urlwait &&
+               ./manage.py migrate &&
+               ./manage.py runserver 0.0.0.0:8000"
+
+    ports:
+      - "8000:8000"
+
+  db:
+    image: postgres:10.1
+    environment:
+      - POSTGRES_USER=${DATABASE_USER:-fullcircle}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD:-fullcircle}
+      - POSTGRES_DB=fullcircle_database
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - db:/var/lib/postgresql/data/pgdata
+
+volumes:
+    db:
