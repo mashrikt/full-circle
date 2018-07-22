@@ -60,3 +60,27 @@ jobs:
           path: test-reports
           destination: test-reports
 
+  deploy:
+    docker:
+      - image: buildpack-deps:trusty
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "5a:b6:f5:b3:d8:92:b0:c2:e1:ac:8d:d6:ed:90:42:e0"
+      - checkout
+      - run:
+          name: Deploy Master to Dokku
+          command: git push dokku@ec2-13-232-92-91.ap-south-1.compute.amazonaws.com:fullcircle master
+
+workflows:
+  version: 2
+
+  build-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
