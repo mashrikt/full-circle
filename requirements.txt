@@ -43,6 +43,6 @@ six==1.11.0
 coreapi==2.3.3
 coreschema==0.0.4
 itypes==1.1.0
-Jinja2==2.10
+Jinja2==2.11.3
 MarkupSafe==1.0
 uritemplate==3.0.0
