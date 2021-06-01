@@ -23,7 +23,7 @@ pytz==2018.5
 requests==2.19.1
 requests-oauthlib==0.8.0
 six==1.11.0
-urllib3==1.23
+urllib3==1.26.5
 # Pytest requirements
 # faker and factoryboy
 factory-boy==2.10.0
